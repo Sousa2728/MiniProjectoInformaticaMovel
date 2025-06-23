@@ -1,16 +1,15 @@
-package com.example.yourevent2
+package com.example.yourevent2.screens
 
+import com.example.yourevent2.adicionar.criarEventoScreen
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +20,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.yourevent2.BaseDados.EventoRepository
 import com.example.yourevent2.BaseDados.EventoViewModel
 import com.example.yourevent2.BaseDados.EventoViewModelFactory
+import com.example.yourevent2.detalhes.CoisaDetalhesScreen
+import com.example.yourevent2.detalhes.DetalhesEventoScreen
+import com.example.yourevent2.detalhes.ParticipanteDetalhesScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -50,12 +52,12 @@ fun MainScreen(repo: EventoRepository) {
             when (currentScreen) {
                 "home" -> homeScreen(repo, onEventoClick = { nomeEvento ->
                     eventoSelecionado = nomeEvento
-                    currentScreen = "detalhes"
+                    currentScreen = "com/example/yourevent2/detalhes"
                 })
 
                 "info" -> infoScreen()
 
-                "detalhes" -> eventoSelecionado?.let { nome ->
+                "com/example/yourevent2/detalhes" -> eventoSelecionado?.let { nome ->
                     DetalhesEventoScreen(
                         nomeEvento = nome,
                         onBack = {
@@ -78,7 +80,7 @@ fun MainScreen(repo: EventoRepository) {
                     ParticipanteDetalhesScreen(
                         idParticipante = id,
                         onBack = {
-                            currentScreen = "detalhes"
+                            currentScreen = "com/example/yourevent2/detalhes"
                             participanteSelecionado = null
                         },
                         repo = repo
@@ -89,7 +91,7 @@ fun MainScreen(repo: EventoRepository) {
                     CoisaDetalhesScreen(
                          idcoisa = id,
                         onBack = {
-                            currentScreen = "detalhes"
+                            currentScreen = "com/example/yourevent2/detalhes"
                             coisaSelecionada = null
                         },
                         repo = repo

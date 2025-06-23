@@ -1,4 +1,4 @@
-package com.example.yourevent
+package com.example.yourevent2.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

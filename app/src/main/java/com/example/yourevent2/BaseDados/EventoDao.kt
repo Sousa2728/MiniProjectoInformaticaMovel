@@ -42,6 +42,7 @@ interface EventoDao {
 
     @Query("SELECT id FROM eventos WHERE nome = :nome LIMIT 1")
     suspend fun obterIdEventoPorNome(nome: String): Int?
+
     @Query("SELECT nome FROM participantes WHERE eventoId = :eventoId")
     fun getNomesParticipantes(eventoId: Int): Flow<List<String>>
 
@@ -77,6 +78,12 @@ interface EventoDao {
 
     @Query("SELECT telefone FROM participantes WHERE eventoId = :idEvento")
     fun getTelefonesPorEventoId(idEvento: Int): Flow<List<String>>
+
+    @Query("SELECT * FROM eventos")
+    fun getEventosCompletos():Flow<List<Evento>>
+
+    @Query("SELECT * FROM coisas_afazer")
+    fun getCoisasAfazer():Flow<List<CoisaAFazer>>
 
 }
 

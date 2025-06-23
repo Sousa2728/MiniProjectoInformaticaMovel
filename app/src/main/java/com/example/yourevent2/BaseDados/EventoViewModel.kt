@@ -44,6 +44,7 @@ class EventoViewModel(private val repository: EventoRepository) : ViewModel() {
     fun nomesParticipantes(eventoId: Int): Flow<List<String>> {
         return repository.getNomesParticipantes(eventoId)
     }
+
     fun nomeEventos(): Flow<List<String>> {
         return repository.getNomeEventos()
     }
@@ -53,16 +54,19 @@ class EventoViewModel(private val repository: EventoRepository) : ViewModel() {
             repository.apagarTodosEventos()
         }
     }
+
     fun apagarEventoPorId(eventoId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.apagarEventoPorId(eventoId)
         }
     }
+
     fun buscarEventoPorNome(nome: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _eventoPorNome.value = repository.obterEventoPorNome(nome)
         }
     }
+
     suspend fun obterIdEventoPorNome(nome: String): Int? {
         return withContext(Dispatchers.IO) {
             repository.obterIdEventoPorNome(nome)
@@ -72,6 +76,7 @@ class EventoViewModel(private val repository: EventoRepository) : ViewModel() {
     fun obterNomesParticipantes(eventoId: Int): Flow<List<String>> {
         return repository.obterNomesParticipantes(eventoId)
     }
+
     fun obeterNomesParticipantesEventoNome(nomeEvento: String): Flow<List<String>> = flow {
         val id = withContext(Dispatchers.IO) {
             repository.obterIdEventoPorNome(nomeEvento)
@@ -82,6 +87,7 @@ class EventoViewModel(private val repository: EventoRepository) : ViewModel() {
             emit(emptyList())
         }
     }
+
     fun buscarParticipantesPorEventoId(eventoId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getParticipantesPorEventoId(eventoId).collect { lista ->
@@ -89,27 +95,33 @@ class EventoViewModel(private val repository: EventoRepository) : ViewModel() {
             }
         }
     }
+
     fun getParticipantePorId(id: Int): Flow<Participante> {
         return repository.getParticipantePorId(id)
     }
+
     fun atualizarPagamento(participanteId: Int, pago: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.atualizarPagamento(participanteId, pago)
         }
     }
+
     fun apagarParticipantePorId(participanteId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.apagarParticipantePorId(participanteId)
         }
     }
+
     fun getCustoAfazerPorEventoId(eventoId: Int): Flow<List<Double>> {
         return repository.getCustoAfazerPorEventoId(eventoId)
     }
+
     fun atualizarCusto(eventoId: Int, novoCusto: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.atualizarCusto(eventoId, novoCusto)
         }
     }
+
     fun getCoisasAfazerPorEventoId(eventoId: Int) {
         viewModelScope.launch {
             repository.getCoisasAfazerPorEventoId(eventoId)
@@ -118,25 +130,32 @@ class EventoViewModel(private val repository: EventoRepository) : ViewModel() {
                 }
         }
     }
+
     fun getCoisaPorId(participanteId: Int): Flow<CoisaAFazer> {
         return repository.getCoisaPorId(participanteId)
     }
+
     fun apagarCoisaPorId(coisaId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.apagarCoisaPorId(coisaId)
         }
     }
+
     fun atualizarConcluidaCoisa(coisaId: Int, concluida: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.atualizarConcluidaCoisa(coisaId, concluida)
         }
     }
+
     fun getTelefonesPorEventoId(idEvento: Int): Flow<List<String>> {
         return repository.getTelefonesPorEventoId(idEvento)
     }
+
+    fun getEventosCompletos(): Flow<List<Evento>> {
+        return repository.getEventosCompletos()
+    }
+    fun getCoisasAfazer(): Flow<List<CoisaAFazer>> {
+        return repository.getCoisasAfazer()
+    }
+
 }
-
-
-
-
-

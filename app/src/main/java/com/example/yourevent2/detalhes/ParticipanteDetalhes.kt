@@ -1,4 +1,4 @@
-package com.example.yourevent2
+package com.example.yourevent2.detalhes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -26,24 +26,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.yourevent2.BaseDados.EventoRepository
 import com.example.yourevent2.BaseDados.EventoViewModel
 import com.example.yourevent2.BaseDados.EventoViewModelFactory
-import com.example.yourevent2.BaseDados.Participante
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.draw.shadow
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import com.example.yourevent2.BaseDados.CoisaAFazer
+import androidx.compose.ui.graphics.vector.ImageVector
 
 
 @Composable
-fun CoisaDetalhesScreen(idcoisa: Int,onBack: () -> Unit,repo: EventoRepository) {
+fun ParticipanteDetalhesScreen(idParticipante: Int,onBack: () -> Unit,repo: EventoRepository) {
 
     val viewModel: EventoViewModel = viewModel(factory = EventoViewModelFactory(repo))
-    val coisa by viewModel.getCoisaPorId(idcoisa).collectAsState(initial = null)
-    var concluida by remember { mutableStateOf(false) }
+    val participante by viewModel.getParticipantePorId(idParticipante).collectAsState(initial = null)
+    var pago by remember { mutableStateOf(false) }
     var eliminar by remember { mutableStateOf(false) }
 
     Column(
@@ -58,7 +55,7 @@ fun CoisaDetalhesScreen(idcoisa: Int,onBack: () -> Unit,repo: EventoRepository) 
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "Coisa a fazer",
+                text = "Participante",
                 fontSize = 20.sp,
                 modifier = Modifier.weight(1f)
             )
@@ -67,16 +64,17 @@ fun CoisaDetalhesScreen(idcoisa: Int,onBack: () -> Unit,repo: EventoRepository) 
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        if (coisa != null) {
-            mostrarCoisa(text = "Descriçao:${coisa!!.descricao}")
-            mostrarCoisa(text = "Custo:${coisa!!.custo}")
-            if (coisa!!.concluida) {
-                mostrarParticipanteComIcone(text = "Concluida", icon = Icons.Default.CheckCircle)
+        if (participante != null) {
+            mostrarParticipante(text = "Nome:${participante?.nome}")
+            mostrarParticipante(text = "Idade:${participante?.idade}")
+            mostrarParticipante(text = "Telefone:${participante?.telefone}")
+            if (participante?.pago == true) {
+                mostrarParticipanteComIcone(text = "Pago", icon = Icons.Default.CheckCircle)
             } else {
-                mostrarParticipanteComIcone(text = "Por Fazer", icon = Icons.Default.Warning)
+                mostrarParticipanteComIcone(text = "Não Pago", icon = Icons.Default.Warning)
                 Spacer(modifier = Modifier.height(8.dp))
-                Button(onClick = { concluida = true }) {
-                    Text(text = "Marcar como concluida")
+                Button(onClick = { pago = true }) {
+                    Text(text = "Marcar como Pago")
                 }
             }
         }
@@ -93,20 +91,22 @@ fun CoisaDetalhesScreen(idcoisa: Int,onBack: () -> Unit,repo: EventoRepository) 
                 Text("Eliminar")
             }
         }
-        if (concluida) {
-            viewModel.atualizarConcluidaCoisa(idcoisa, true)
-            concluida = false
-        }
-        if (eliminar) {
-            viewModel.apagarCoisaPorId(idcoisa)
-            onBack()
-            eliminar = false
-        }
+    if (pago) {
+        viewModel.atualizarPagamento(idParticipante, true)
+        pago = false
     }
+    if (eliminar) {
+        viewModel.apagarParticipantePorId(idParticipante)
+        onBack()
+        eliminar = false
+    }
+        }
 }
 
+
+
 @Composable
-fun mostrarCoisa(text: String) {
+fun mostrarParticipante(text: String) {
     Spacer(modifier = Modifier.height(8.dp))
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -116,6 +116,21 @@ fun mostrarCoisa(text: String) {
             .background(MaterialTheme.colorScheme.primary)
             .padding(8.dp)
     ) {
+        Text(text = text, fontSize = 20.sp)
+    }
+}
+@Composable
+fun mostrarParticipanteComIcone(text: String, icon: ImageVector) {
+    Spacer(modifier = Modifier.height(8.dp))
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(5.dp, RoundedCornerShape(10.dp))
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(8.dp)
+    ) {
+        Icon(imageVector = icon, contentDescription = null, modifier = Modifier.padding(end = 8.dp))
         Text(text = text, fontSize = 20.sp)
     }
 }

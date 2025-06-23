@@ -66,5 +66,11 @@ class EventoRepository(private val dao: EventoDao) {
     fun getTelefonesPorEventoId(idEvento: Int): Flow<List<String>> {
         return dao.getTelefonesPorEventoId(idEvento)
     }
+    fun getEventosCompletos(): Flow<List<Evento>> {
+       return dao.getEventosCompletos()
+    }
+    fun getCoisasAfazer(): Flow<List<CoisaAFazer>> {
+        return dao.getCoisasAfazer()
+    }
 }
 

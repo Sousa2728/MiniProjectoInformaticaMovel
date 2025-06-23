@@ -1,4 +1,4 @@
-package com.example.yourevent2
+package com.example.yourevent2.adicionar
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -70,6 +70,7 @@ fun adicionarAFazeres(repo: EventoRepository, onClick: () -> Unit, nomeEvento: S
         }
     }
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun verificarAFazeres(

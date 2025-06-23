@@ -13,18 +13,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.example.yourevent.WelcomeScreen
+import com.example.yourevent2.screens.WelcomeScreen
 import com.example.yourevent.ui.theme.YourEventTheme
 import android.app.Activity
 import android.os.Build
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.example.yourevent2.BaseDados.AppDatabase
 import com.example.yourevent2.BaseDados.EventoRepository
+import com.example.yourevent2.screens.MainScreen
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hideSystemBars(this)
@@ -46,6 +49,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun myApp(
     modifier: Modifier=Modifier,
@@ -62,6 +66,7 @@ fun myApp(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.HONEYCOMB)
 fun hideSystemBars(activity: Activity) {
     val window = activity.window
     WindowCompat.setDecorFitsSystemWindows(window, false)
