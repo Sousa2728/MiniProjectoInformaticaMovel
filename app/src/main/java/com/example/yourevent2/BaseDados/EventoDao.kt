@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -61,9 +62,6 @@ interface EventoDao {
     @Query("SELECT custo FROM coisas_afazer WHERE eventoId = :eventoId")
     fun getCustoAfazerPorEventoId(eventoId: Int): Flow<List<Double>>
 
-    @Query("UPDATE eventos SET custo = :novoCusto WHERE id = :eventoId")
-    fun atualizarCusto(eventoId: Int, novoCusto: Double)
-
     @Query("SELECT * FROM coisas_afazer WHERE eventoId = :eventoId")
     fun getCoisasAfazerPorEventoId(eventoId: Int): Flow<List<CoisaAFazer>>
 
@@ -84,6 +82,21 @@ interface EventoDao {
 
     @Query("SELECT * FROM coisas_afazer")
     fun getCoisasAfazer():Flow<List<CoisaAFazer>>
+
+    @Query("UPDATE eventos SET custo = custo +:novoCusto WHERE id = :eventoId")
+    fun atualizarCusto(eventoId: Int, novoCusto: Double)
+
+    @Query("UPDATE eventos SET nome =:novoNome  WHERE id = :eventoId")
+    fun atualizarNome(eventoId: Int, novoNome: String)
+
+    @Query("UPDATE eventos SET local =:novoLocal  WHERE id = :eventoId")
+    fun atualizarLocal(eventoId: Int, novoLocal: String)
+
+    @Query("UPDATE eventos SET observacoes =:novasObservacoes  WHERE id = :eventoId")
+    fun atualizarObservacoes(eventoId: Int, novasObservacoes: String)
+
+
+
 
 }
 

@@ -72,5 +72,16 @@ class EventoRepository(private val dao: EventoDao) {
     fun getCoisasAfazer(): Flow<List<CoisaAFazer>> {
         return dao.getCoisasAfazer()
     }
+
+    fun atualizarNome(eventoId: Int, novoNome: String) {
+        dao.atualizarNome(eventoId, novoNome)
+    }
+    fun atualizarLocal(eventoId: Int, novoLocal: String) {
+        dao.atualizarLocal(eventoId, novoLocal)
+    }
+    fun atualizarObservacoes(eventoId: Int, novasObservacoes: String) {
+        dao.atualizarObservacoes(eventoId, novasObservacoes)
+    }
+
 }
 

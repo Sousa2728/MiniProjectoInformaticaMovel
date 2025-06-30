@@ -21,8 +21,9 @@ import com.example.yourevent2.BaseDados.EventoRepository
 import com.example.yourevent2.BaseDados.EventoViewModel
 import com.example.yourevent2.BaseDados.EventoViewModelFactory
 import com.example.yourevent2.detalhes.CoisaDetalhesScreen
-import com.example.yourevent2.detalhes.DetalhesEventoScreen
 import com.example.yourevent2.detalhes.ParticipanteDetalhesScreen
+import com.example.yourevent2.detalhes.detalhesEvento
+import com.example.yourevent2.detalhes.editarDetalhesEvento
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -32,6 +33,8 @@ fun MainScreen(repo: EventoRepository) {
     var eventoSelecionado by rememberSaveable { mutableStateOf<String?>(null) }
     var participanteSelecionado by rememberSaveable { mutableStateOf<Int?>(null) }
     var coisaSelecionada by rememberSaveable { mutableStateOf<Int?>(null) }
+
+
 
     Scaffold(
         bottomBar = {
@@ -58,7 +61,7 @@ fun MainScreen(repo: EventoRepository) {
                 "info" -> infoScreen()
 
                 "com/example/yourevent2/detalhes" -> eventoSelecionado?.let { nome ->
-                    DetalhesEventoScreen(
+                    detalhesEvento(
                         nomeEvento = nome,
                         onBack = {
                             currentScreen = "home"
@@ -72,7 +75,11 @@ fun MainScreen(repo: EventoRepository) {
                         onCoisaClick = { idCoisa ->
                             coisaSelecionada = idCoisa
                             currentScreen = "detalhes_coisa"
+                        },
+                        onEditarClick = {
+                            currentScreen = "editar_Evento"
                         }
+
                     )
                 }
 
@@ -89,7 +96,7 @@ fun MainScreen(repo: EventoRepository) {
 
                 "detalhes_coisa" -> coisaSelecionada?.let { id ->
                     CoisaDetalhesScreen(
-                         idcoisa = id,
+                        idcoisa = id,
                         onBack = {
                             currentScreen = "com/example/yourevent2/detalhes"
                             coisaSelecionada = null
@@ -101,6 +108,17 @@ fun MainScreen(repo: EventoRepository) {
                 "criar_Evento" -> criarEventoScreen(repo = repo, onClick = {
                     currentScreen = "home"
                 })
+
+                "editar_Evento" -> eventoSelecionado?.let { nome ->
+                    editarDetalhesEvento(
+                        nomeEvento = nome,
+                        onBack = {
+                            currentScreen = "home"
+                            eventoSelecionado = null
+                        },
+                        repo = repo
+                    )
+                }
             }
         }
     }

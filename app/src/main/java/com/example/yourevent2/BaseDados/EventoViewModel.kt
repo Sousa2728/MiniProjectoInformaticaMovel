@@ -158,4 +158,20 @@ class EventoViewModel(private val repository: EventoRepository) : ViewModel() {
         return repository.getCoisasAfazer()
     }
 
+    fun atualizarNome(eventoId: Int, novoNome: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.atualizarNome(eventoId, novoNome)
+        }
+    }
+    fun atualizarLocal(eventoId: Int, novoLocal: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.atualizarLocal(eventoId, novoLocal)
+        }
+    }
+    fun atualizarObservacoes(eventoId: Int, novasObservacoes: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.atualizarObservacoes(eventoId, novasObservacoes)
+        }
+    }
+
 }

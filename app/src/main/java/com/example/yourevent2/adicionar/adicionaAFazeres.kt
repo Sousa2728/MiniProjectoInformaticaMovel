@@ -61,6 +61,7 @@ fun adicionarAFazeres(repo: EventoRepository, onClick: () -> Unit, nomeEvento: S
                 if (eventoId != null) {
                     val coisaAFazer = CoisaAFazer(0, eventoId!!,descricao,false, custo.toDoubleOrNull() ?: 0.0)
                     viewModel.inserirCoisa(coisaAFazer)
+                    viewModel.atualizarCusto(eventoId!!, custo.toDoubleOrNull() ?: 0.0)
                     onClick()
                 }
             },
